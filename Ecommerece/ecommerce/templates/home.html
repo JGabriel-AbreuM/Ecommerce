@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}E-JRGEEK{% endblock %}
+
+{% block content %}
+
+    {% if produtos %}
+    <div class="card-group">
+        {% for produto in produtos %}
+            {% if produto.estoque %}
+              <div class="card" style="margin-right: 5px;">
+              <img class="card-img-top img-fluid" src="{{ produto.imagem.url }}" style="max-height: 200px;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ produto.nome }}</h5>
+                  <p class="card-text">{{ produto.preco }} R$</p>
+                </div>
+                <div class="card-footer" style="text-align: right;">
+                  <a href="{% url 'produto:atualiza' pk=produto.id %}"><button type="button" class="btn btn-outline-primary">Atualizar</button></a>
+                  <a href="{% url 'produto:delete' pk=produto.id %}"><button type="button" class="btn btn-outline-danger">Deletar</button></a>
+                  <a href="{% url 'produto:detalhe' pk=produto.id %}"><button type="button" class="btn btn-outline-secondary">Comprar</button></a>
+                </div>
+              </div>
+            {% endif %}        
+        {% endfor%}
+    </div>
+    {% else %}
+        Não há produtos disponíveis
+    {% endif %}
+    
+{% endblock %}  

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} Compra {% endblock %}
+
+{% block content %}
+    <div class="container" style="margin: 0 auto;">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="project-info-box mt-0">
+                    <h5>{{ produto.nome }}</h5>
+                    <p class="mb-0">{{ produto.descricao }}</p>
+                    <br>
+                </div><!-- / project-info-box -->
+
+                <div class="project-info-box">
+                    <p><strong>{{ produto.preco }} R$</strong></p>
+                </div><!-- / project-info-box -->
+
+            </div><!-- / column -->
+
+            <div class="col-md-7">
+                <img src="{{ produto.imagem.url }}" alt="project-image" class="rounded" style=" width: 400px; height: 300px;">
+                <div class="project-info-box">
+                    <p><b>Categoria:</b> {{ produto.categoria }}</p>
+                </div>
+            </div>
+    </div>
+    <a href="{% url 'produto:confirma' pk=produto.id %}"><button type="button" class="btn btn-outline-primary">Finalizar</button></a>
+{% endblock %}

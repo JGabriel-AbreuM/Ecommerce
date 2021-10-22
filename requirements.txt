@@ -1,0 +1,5 @@
+django
+Pillow
+django-allauth
+django-crispy-forms
+gunicorn

@@ -9,4 +9,4 @@ dj-database-url
 dj-static
 django-bootstrap-form
 django-storages
-
+whitenoise

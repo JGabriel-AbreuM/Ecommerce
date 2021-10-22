@@ -10,7 +10,6 @@ dj-static
 django-bootstrap-form
 django-storages
 docutils
-jmespath
 python-dateuti
 python-decouple
 pytz

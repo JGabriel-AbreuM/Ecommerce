@@ -9,10 +9,4 @@ dj-database-url
 dj-static
 django-bootstrap-form
 django-storages
-docutils
-python-dateuti
-python-decouple
-pytz
-s3transfer
-six
-static3
+

@@ -1,0 +1,6 @@
+django
+Pillow
+django-allauth
+django-crispy-forms
+requests
+knox

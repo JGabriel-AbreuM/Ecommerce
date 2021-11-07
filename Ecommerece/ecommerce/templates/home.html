@@ -2,27 +2,96 @@
 
 {% block title %}E-JRGEEK{% endblock %}
 
+
 {% block content %}
 
     {% if produtos %}
+
     <div class="card-group">
-        {% for produto in produtos %}
-            {% if produto.estoque %}
-              <div class="card" style="margin-right: 5px;">
+
+      
+      {% for produto in produtos %}
+          {% if produto.estoque > 0 %}
+            <div class="card" style="margin-right: 5px;">
+
               <img class="card-img-top img-fluid" src="{{ produto.imagem.url }}" style="max-height: 200px;">
-                <div class="card-body">
-                  <h5 class="card-title">{{ produto.nome }}</h5>
-                  <p class="card-text">{{ produto.preco }} R$</p>
-                </div>
-                <div class="card-footer" style="text-align: right;">
-                  <a href="{% url 'produto:atualiza' pk=produto.id %}"><button type="button" class="btn btn-outline-primary">Atualizar</button></a>
-                  <a href="{% url 'produto:delete' pk=produto.id %}"><button type="button" class="btn btn-outline-danger">Deletar</button></a>
-                  <a href="{% url 'produto:detalhe' pk=produto.id %}"><button type="button" class="btn btn-outline-secondary">Comprar</button></a>
-                </div>
+              
+              <div class="card-body">
+                
+                <h5 class="card-title">{{ produto.nome }} </h5>
+                
+                <p class="card-text">{{ produto.preco }} R$</p>
+                {% if produto.desconto %}
+                  <p class="card-text">{{ produto.desconto }}% de desconto</p>
+                {% endif %}
+              
               </div>
-            {% endif %}        
-        {% endfor%}
-    </div>
+              
+              <div class="card-footer" style="text-align: right;">
+                <a id="{{ produto.id }}"><button onclick="AddCarrinho('{{ produto.id}}')" type="button" class="btn btn-outline-secondary">Adicionar a carrinho</button></a>
+                <a href="{% url 'produto:atualiza' pk=produto.id %}"><button type="button" class="btn btn-outline-primary">Atualizar</button></a>
+                <a href="{% url 'produto:delete' pk=produto.id %}"><button type="button" class="btn btn-outline-danger">Deletar</button></a>
+                <a href="{% url 'produto:detalhe' pk=produto.id %}"><button type="button" class="btn btn-outline-secondary">Comprar</button></a>
+                
+              
+              </div>
+            </div>  
+          {% endif %}              
+          {% endfor %}
+    
+        </div>
+        <div style="margin-top: 20px;">
+          <a href="{% url 'produto:carrinho'%}"><button onclick="PushSession()" type="button" class="btn btn-outline-secondary"> Meu carrinho</button></a>
+        </div>
+        <div style="margin-top: 30px;">
+
+          <form>
+            <div class="form-group">
+              
+              {{ filter.form }}
+    
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">O que desejas?</button>
+          </form>
+        </div>
+
+            <script>
+              let carrinho = []
+
+              function RemoveCarrinho(id) {
+                pos = carrinho.indexOf(id)
+
+                while(pos >= 0){
+                    carrinho.splice(pos, 1);
+                    pos = carrinho.indexOf(id);
+                }
+
+                elemento = document.getElementById(id)
+                elemento.innerHTML = `
+                <a id="${id}"><button onclick="AddCarrinho('${id}')" type="button" class="btn btn-outline-secondary">Adicionar a carrinho</button></a>
+                `
+
+                console.log(carrinho)
+              }
+
+              function AddCarrinho(id) {
+                if (carrinho.indexOf(id) ===  -1) {
+                  
+                  carrinho.push(id)
+                  
+                  elemento = document.getElementById(id)
+                  elemento.innerHTML = `
+                  <a id="${id}"><button onclick="RemoveCarrinho('${id}')" type="button" class="btn btn-outline-secondary">Remover do Carrinho</button></a>
+                  `
+                  console.log(carrinho)
+                }
+              }
+
+              function PushSession() {
+                document.cookie = `produtos= ${carrinho}`
+              }
+            </script>  
+
     {% else %}
         Não há produtos disponíveis
     {% endif %}

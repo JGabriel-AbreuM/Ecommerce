@@ -25,8 +25,12 @@ class InsereProduto(forms.ModelForm):
             "nome",
             "descricao",
             "preco",
+            "desconto",
             "estoque",
             "imagem",
             "categoria",
         ]
-
+        
+        labels = {
+            'desconto': "Desconto (%)"
+        }

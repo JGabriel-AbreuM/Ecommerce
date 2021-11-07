@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Compra Finalizada{% endblock %}
+
+
+{% block content %}
+    {% if invalido %}
+        Não podes comprar isso!
+        <br/>
+        <br/>
+        <a href="{% url 'produto:home' %}"><button type="button" class="btn btn-outline-primary">Home</button></a>
+    {% else %}
+        Compras Finalizadas com Sucesso, Volte sempre!
+    {% endif %}
+{% endblock %}

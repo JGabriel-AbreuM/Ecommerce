@@ -13,7 +13,8 @@
                 </div><!-- / project-info-box -->
 
                 <div class="project-info-box">
-                    <p><strong>{{ produto.preco }} R$</strong></p>
+                    <p><strong style="text-decoration: line-through;">{{ produto.preco }} R$</strong></p>
+                    <p><strong style="font-weight: 900; font-size: 20px;">{{ preco_liquido }} R$</strong></p>
                 </div><!-- / project-info-box -->
 
             </div><!-- / column -->
@@ -25,5 +26,15 @@
                 </div>
             </div>
     </div>
-    <a href="{% url 'produto:home' %}"><button type="button" class="btn btn-outline-primary">Finalizar</button></a>
+    {% if tipo %}
+    
+        <a href="{% url 'produto:confirma' pk=produto.id %}"><button type="button" class="btn btn-outline-primary">Finalizar</button></a>
+
+    {% else %}
+        Você não pode comprar esse produto, esteja logado como comprador ou cadastre-se como tal
+        <br/>
+        <br/>
+        <a href="{% url 'produto:home' %}"><button type="button" class="btn btn-outline-primary">Voltar</button></a>
+    {% endif %}
+
 {% endblock %}

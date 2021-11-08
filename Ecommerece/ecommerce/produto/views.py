@@ -122,10 +122,18 @@ class CarrinhoView(View):
         for e in elements:
             products.append(Produto.return_produto(e))
         
-        context["elementos"] = products    
+        context["produtos"] = products    
         response = render(request, 'carrinho.html', context)
         return response
 
 class ConfirmCarrinhoView(View):
     def get(self, request, *args, **kwargs):
+        ids = request.COOKIES["produtos"]
+        for id in ids:
+            if id == ',':
+                continue
+            
+            Produto.atualiza_estoque(id)
+            
+
         return render(request, 'confirma_carrinho.html')
